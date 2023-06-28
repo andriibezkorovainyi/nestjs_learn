@@ -1,32 +1,35 @@
+# compiled output
+/dist
+/node_modules
+
 # Logs
 logs
 *.log
 npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
-# Dependencies
-node_modules
-.husky
-
-# Compiled output
-dist/
-
-# Environment variables
-.env
-
-# Editor and IDE files
-.idea/
-.vscode/
-*.sublime-*
-*.swp
-*.swo
-
-# Testing
-coverage/
-
-# Build process
-*.tmp
-*.bak
-
-# OS generated files
-Thumbs.db
+# OS
 .DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
