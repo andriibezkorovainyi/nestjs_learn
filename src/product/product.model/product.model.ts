@@ -1,3 +1,6 @@
+import { Schema } from '@nestjs/mongoose';
+
+@Schema()
 export class ProductModel {
   _id: string;
   image: string;

@@ -1,8 +1,20 @@
-import { Controller, Post, HttpCode, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  HttpCode,
+  Body,
+  Get,
+  Param,
+  Inject,
+} from '@nestjs/common';
 import { AuthDto } from './dto/auth.dto';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
+  @Inject()
+  private readonly authService: AuthService;
+
   @Post('register')
   async register(@Body() dto: AuthDto) {
     return 'register';
