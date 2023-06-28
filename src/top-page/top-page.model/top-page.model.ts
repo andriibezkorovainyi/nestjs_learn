@@ -1,4 +1,4 @@
-enum TopLevelCategory {
+export enum TopLevelCategory {
   Courses,
   Services,
   Books,
@@ -6,6 +6,7 @@ enum TopLevelCategory {
 }
 
 export class TopPageModel {
+  _id: string;
   firstCategory: TopLevelCategory;
   secondCategory: string;
   title: string;
