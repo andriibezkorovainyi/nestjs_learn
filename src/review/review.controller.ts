@@ -8,17 +8,23 @@ import {
   Inject,
   Param,
   Post,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { ReviewModel } from './review.model/review.model';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { REVIEW_NOT_FOUND } from './review-constants';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { AuthGuard } from '@nestjs/passport';
+import { UserEmail } from '../auth/decorators/user-email.decorator';
 
 @Controller('review')
 export class ReviewController {
   @Inject()
   private readonly reviewService: ReviewService;
 
+  @UsePipes(new ValidationPipe())
   @Post('create')
   async create(@Body() dto: CreateReviewDto) {
     return this.reviewService.create(dto);
@@ -33,8 +39,18 @@ export class ReviewController {
     }
   }
 
+  // @UseGuards(JwtAuthGuard)
   @Get('byProduct/:productId')
-  async getByProduct(@Param('productId') productId: string) {
+  async getByProduct(
+    @Param('productId') productId: string,
+    @UserEmail() email: string,
+  ) {
+    console.log(email);
     return this.reviewService.findByProductId(productId);
+  }
+
+  @Get('getAll')
+  async getAll() {
+    return this.reviewService.getAll();
   }
 }

@@ -1,8 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ReviewDocument, ReviewModel } from './review.model/review.model';
 import { Model, Types } from 'mongoose';
 import { CreateReviewDto } from './dto/create-review.dto';
+import { INVALID_PRODUCT_ID } from './review-constants';
 
 @Injectable()
 export class ReviewService {
@@ -20,14 +21,14 @@ export class ReviewService {
     return this.reviewModel.create(dto);
   }
 
-  async delete(id: string): Promise<DocumentType | null> {
-    return this.reviewModel.findByIdAndDelete(id);
-  }
-
   async findByProductId(productId: string): Promise<ReviewDocument[]> {
-    return this.reviewModel
-      .find({ product: new Types.ObjectId(productId) })
-      .exec();
+    try {
+      return this.reviewModel
+        .find({ product: new Types.ObjectId(productId) })
+        .exec();
+    } catch (e) {
+      throw new BadRequestException(INVALID_PRODUCT_ID);
+    }
   }
 
   async deleteByProductId(productId: string) {
@@ -36,5 +37,13 @@ export class ReviewService {
         product: new Types.ObjectId(productId),
       })
       .exec();
+  }
+
+  async delete(id: string): Promise<DocumentType | null> {
+    return this.reviewModel.findByIdAndDelete(id);
+  }
+
+  async getAll() {
+    return this.reviewModel.find().exec();
   }
 }

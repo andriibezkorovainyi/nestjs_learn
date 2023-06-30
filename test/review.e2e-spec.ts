@@ -28,7 +28,7 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/review/create (GET)', () => {
+  it('/review/create (GET) - success', () => {
     return request(app.getHttpServer())
       .post('/review/create')
       .send(testReview)
@@ -38,6 +38,13 @@ describe('AppController (e2e)', () => {
         expect(body).toBeDefined();
         createdId = body._id;
       });
+  });
+
+  it('/review/create (GET) - fail', () => {
+    return request(app.getHttpServer())
+      .post('/review/create')
+      .send({ ...testReview, rating: 0 })
+      .expect(400);
   });
 
   it('/review/byProduct/:productId (GET)', () => {
