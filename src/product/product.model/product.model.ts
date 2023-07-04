@@ -9,7 +9,7 @@ class ProductCharacteristic {
   value: string;
 }
 
-type ProductDocument = HydratedDocument<ProductModel>;
+export type ProductDocument = HydratedDocument<ProductModel>;
 
 @Schema({ timestamps: true })
 export class ProductModel {
