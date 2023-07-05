@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   NotFoundException,
   Param,
   Patch,
@@ -63,6 +62,6 @@ export class ProductController {
 
   @Post('find')
   async find(@Body() dto: FindProductDto) {
-    return 'find';
+    return this.productService.findWithReviews(dto);
   }
 }

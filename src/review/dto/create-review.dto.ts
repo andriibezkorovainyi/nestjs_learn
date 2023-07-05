@@ -1,4 +1,5 @@
 import { IsNumber, IsString, Max, Min } from 'class-validator';
+import { IsValidMongoId } from '../../utils/isValidMongoId';
 
 export class CreateReviewDto {
   @IsString()
@@ -16,5 +17,6 @@ export class CreateReviewDto {
   rating: number;
 
   @IsString()
+  @IsValidMongoId()
   product: string;
 }

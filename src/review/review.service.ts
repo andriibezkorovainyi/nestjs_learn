@@ -39,8 +39,8 @@ export class ReviewService {
       .exec();
   }
 
-  async delete(id: string): Promise<DocumentType | null> {
-    return this.reviewModel.findByIdAndDelete(id);
+  async delete(id: string): Promise<ReviewDocument | null> {
+    return this.reviewModel.findByIdAndDelete(id).exec();
   }
 
   async getAll() {

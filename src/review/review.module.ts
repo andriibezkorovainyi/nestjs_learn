@@ -3,6 +3,7 @@ import { ReviewController } from './review.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ReviewModel, ReviewSchema } from './review.model/review.model';
 import { ReviewService } from './review.service';
+import { IsValidMongoIdConstraint } from '../utils/isValidMongoId';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { ReviewService } from './review.service';
     ]),
   ],
   controllers: [ReviewController],
-  providers: [ReviewService],
+  providers: [ReviewService, IsValidMongoIdConstraint],
 })
 export class ReviewModule {}
