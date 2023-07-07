@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory, SchemaOptions } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export enum TopLevelCategory {
@@ -37,7 +37,7 @@ export class TopPageModel {
   @Prop({ unique: true })
   alias: string;
 
-  @Prop()
+  @Prop({ text: true })
   title: string;
 
   @Prop()
