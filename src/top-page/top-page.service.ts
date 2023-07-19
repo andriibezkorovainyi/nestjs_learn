@@ -28,7 +28,7 @@ export class TopPageService {
   }
 
   async getAll(): Promise<TopPageDocument[]> {
-    return this.topPageModel.find().exec();
+    return this.topPageModel.find({}).exec();
   }
 
   async delete(id: string): Promise<TopPageDocument | null> {
