@@ -5,30 +5,36 @@ import {
   Get,
   HttpException,
   HttpStatus,
-  Inject,
   Param,
   Post,
-  UseGuards,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { REVIEW_NOT_FOUND } from './review-constants';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { AuthGuard } from '@nestjs/passport';
 import { UserEmail } from '../auth/decorators/user-email.decorator';
 import { IdValidationPipe } from '../pipes/id-validation.pipe';
-import * as assert from 'assert';
+import { TelegramService } from '../telegram/telegram.service';
 
 @Controller('review')
 export class ReviewController {
-  @Inject()
-  private readonly reviewService: ReviewService;
+  constructor(
+    private readonly reviewService: ReviewService,
+    private readonly telegramService: TelegramService,
+  ) {}
 
   @Post('create')
   async create(@Body(IdValidationPipe) dto: CreateReviewDto) {
     return this.reviewService.create(dto);
+  }
+
+  @Post('notify')
+  async notify(@Body() dto: CreateReviewDto) {
+    const message =
+      `Пользователь оставил отзыв на товар: ${dto.title}\n` +
+      `Оценка: ${dto.rating}\n` +
+      `Комментарий: ${dto.description}\n` +
+      `Имя: ${dto.name}\n`;
+    return this.telegramService.sendMessage(message);
   }
 
   @Delete(':id')
